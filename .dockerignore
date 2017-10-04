@@ -1,0 +1,5 @@
+*
+!requirements.txt
+!run.sh
+!nop.sh
+!tests/*
