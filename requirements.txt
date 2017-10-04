@@ -1,0 +1,3 @@
+# Python dependencies for the robot-runner
+robotframework == 3.0.2
+robotframework-selenium2library == 1.8.0

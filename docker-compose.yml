@@ -1,0 +1,47 @@
+# Usage:
+#   docker-compose up
+#
+# Input:
+#   volumes: ./robot-tests for the Robot test files
+# Output:
+#   volumes: ./output for the Robot output files
+
+version: "2"
+services:
+  hub:
+    image: selenium/hub:2.53.1
+    restart: unless-stopped
+    shm_size: 256M
+
+  chrome-node:
+    image: selenium/node-chrome:2.53.1
+    restart: unless-stopped
+    shm_size: 256M
+    depends_on:
+    - hub
+    environment:
+    - HUB_PORT_4444_TCP_ADDR=hub
+    - HUB_PORT_4444_TCP_PORT=4444
+    stdin_open: false
+    tty: false
+
+  robot-runner:
+    build: .
+    restart: "no"
+    depends_on:
+    - hub
+    - chrome-node
+    volumes:
+    - ./robot-tests:/tmp/tests
+    - ./output:/output
+    environment:
+    - HUB_ADDR=hub
+    - HUB_PORT=4444
+    - ROBOT_TESTS=/tmp/tests
+    - OUTPUT_DIR=/output
+    command: nop.sh
+
+#networks:
+#  grid:
+#    external:
+#      name: selenium-grid
