@@ -29,3 +29,7 @@ Open browser page
     [Arguments]                         ${page_url}
     Go to                               ${page_url}
     Log                                 Opened url at ${page_url} in ${browser}
+
+Page click link
+    [Arguments]                         ${link_locator}
+    Click link                          ${link_locator}
