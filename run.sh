@@ -1,6 +1,8 @@
 #!/bin/sh
 
-FIRSTPARAMETER=$1
+# Inputs
+ROBOT_OPTIONS=$1
+CUSTOM_TEST_DIR=$2
 
 # Set the defaults
 DEFAULT_LOG_LEVEL="INFO" # Available levels: TRACE, DEBUG, INFO (default), WARN, NONE (no logging)
@@ -17,32 +19,35 @@ DISPLAY=${DISPLAY:-$DEFAULT_DISPLAY}
 ROBOT_TESTS=${ROBOT_TESTS:-$DEFAULT_ROBOT_TESTS}
 # echo $HOSTS >> /etc/hosts
 
-
 if [ "$ROBOT_TESTS" = "false" ]; then
   echo "Error: Please specify the robot test or directory as env var ROBOT_TESTS"
   exit 1
-elif [ -z "$FIRSTPARAMETER" ]; then
+elif [ -z "$CUSTOM_TEST_DIR" ]; then
   echo "Use default test dir"
   echo "Running tests from: $ROBOT_TESTS"
-elif [ $FIRSTPARAMETER = "all" ]; then
+elif [ $CUSTOM_TEST_DIR = "all" ]; then
   echo "Run all tests in every folder"
   ROBOT_TESTS=/tmp/tests/
 else
-  ROBOT_TESTS=/tmp/tests/$FIRSTPARAMETER
-  echo "Running tests from: $ROBOT_TESTS"
+  ROBOT_TESTS=/tmp/tests/$CUSTOM_TEST_DIR
+  echo "Running tests from: $CUSTOM_TEST_DIR"
+fi
+
+if [ ! -z "$ROBOT_OPTIONS" ]; then
+  echo "Executing robot tests with options: $ROBOT_OPTIONS"
+  echo "Use option '-h' to get list of arguments"
 fi
 
 # Clean old screenshots from output folder
-rm  ${OUTPUT_DIR}/*.png
+rm  ${OUTPUT_DIR}/*.png 2>/dev/null
 
 # Execute tests
-echo -e "Executing robot tests at log level ${LOG_LEVEL}"
-
 echo
 echo "#######################################"
 echo "# Running tests                       #"
 echo "#######################################"
 echo
+echo "robot ${ROBOT_OPTIONS} --outputdir ${OUTPUT_DIR} ${ROBOT_TESTS}"
+echo
 
-robot --loglevel ${LOG_LEVEL}  --outputdir ${OUTPUT_DIR} ${ROBOT_TESTS}
-
+robot ${ROBOT_OPTIONS} --outputdir ${OUTPUT_DIR} ${ROBOT_TESTS}
