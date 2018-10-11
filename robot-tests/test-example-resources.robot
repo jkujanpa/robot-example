@@ -18,7 +18,7 @@ ${capabilities}                         None
 Init browser
     Open Browser                        ${init_url}   ${browser}    ${alias}     ${seleniumhost}
     Set Window Size                     ${1400}  ${900}
-    Maximize Browser Window
+#    Maximize Browser Window
 
 Terminite browser
     Close Browser

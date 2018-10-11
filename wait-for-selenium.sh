@@ -1,6 +1,6 @@
 #!/bin/bash -ue
 
-url="localhost:4444/wd/hub/status"
+url="${1}/wd/hub/status"
 output_match=\"ready\":true
 
 shift

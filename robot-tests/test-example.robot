@@ -20,9 +20,7 @@ Open Google.fi på svenska
     [Tags]
     # Open browser with url as parameters
     Open browser page  http://www.google.fi
-    # Screenshot page
-    Capture Page Screenshot
     # Click link
-    Page click link  //*[@id="als"]//a[text()[contains(.,'svenska')]]
+    Page click link  //*[@id="SIvCob"]//a[text()[contains(.,'svenska')]]
     # Screenshot page
     Capture Page Screenshot
