@@ -2,4 +2,6 @@
 !requirements.txt
 !run.sh
 !nop.sh
+!wait-for-selenium.sh
+!run_robot.sh
 !tests/*
